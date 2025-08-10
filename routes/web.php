@@ -72,6 +72,10 @@ Route::get('/admin/datlaimatkhau/{token}', [DangNhapController::class,'hienFormD
 Route::post('/admin/datlaimatkhau', [DangNhapController::class,'reset'])->name('password.update');
 
 Route::get('/admin/dangnhap', [DangNhapController::class,'dangNhap'])->name('login');
+Route::get('/admin/dangnhaptest', function () {
+    // Auth::logout();
+    return view('admin.dangnhaps.dangnhapglass');
+})->name('khongcoquyen');
 Route::post('/admin/dangnhap', [DangNhapController::class,'kiemTraDangNhap']);
 Route::get('/admin/dangxuat', [DangNhapController::class,'dangXuat']);
 Route::get('/', function () {return redirect('/admin');})->middleware('auth');

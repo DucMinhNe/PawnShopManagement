@@ -22,24 +22,7 @@ td {
 </style>
 <section>
     <div class="container">
-        <div class="form-group row mb-0">
-            <label for="id_khoa_filter" class="col-sm-2 col-form-label">Khoa</label>
-            <div class="col-sm-3">
-                <select name="id_khoa_filter" id="id_khoa_filter" class="form-control select2" style="width: 100%;">
-                    <option value="0">-- Chọn khoa --</option>
-                    @foreach ($khoas as $khoa)
-                    @if ($khoa->trang_thai == 1)
-                    <option value="{{ $khoa->id}}">{{ $khoa->ten_khoa }}
-                    </option>
-                    @endif
-                    @endforeach
-                </select>
-            </div>
             <ul class="nav nav-pills nav-pills-bg-soft ml-auto mb-3">
-                <li class="nav-item mr-1">
-                    <button id="themSinhVienExcelBtn" class="btn btn-primary" type="button">Thêm Bằng File
-                        Excel</button>
-                </li>
                 <li class="nav-item mr-1">
                     <button id="showInactiveBtn" class="btn btn-primary" type="button" value=''>Hiển thị danh sách đã
                         xóa</button>
@@ -50,41 +33,6 @@ td {
                     </button>
                 </li>
             </ul>
-        </div>
-        <div class="form-group row mt-0">
-
-            <label for="id_chuyen_nganh_filter" class="col-sm-2 col-form-label">Chuyên ngành</label>
-            <div class="col-sm-3">
-                <select name="id_chuyen_nganh_filter" id="id_chuyen_nganh_filter" class="form-control select2"
-                    style="width: 100%;">
-                    <option value="0">-- Chọn chuyên ngành --</option>
-                    @foreach ($chuyennganhs as $chuyennganh)
-                    @if ($chuyennganh->trang_thai == 1)
-                    <option value="{{ $chuyennganh->id}}">{{ $chuyennganh->ten_chuyen_nganh }}
-                    </option>
-                    @endif
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <div class="form-group row mt-0">
-            <label for="id_lop_hoc_filter" class="col-sm-2 col-form-label">Lớp Học</label>
-            <div class="col-sm-3">
-                <select name="id_lop_hoc_filter" id="id_lop_hoc_filter" class="form-control select2"
-                    style="width: 100%;">
-                    <option value="0">-- Chọn lớp --</option>
-                    @foreach ($lophocs as $lophoc)
-                    @if ($lophoc->trang_thai == 1)
-                    <option value="{{ $lophoc->id}}">{{ $lophoc->ten_lop_hoc }}
-                    </option>
-                    @endif
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-sm-2">
-                <button id="xemBtn" class="btn btn-info" type="button">Xem</button>
-                <button id="datLaiBtn" class="btn btn-info" type="button">Đặt lại</button>
-            </div>
         </div>
 
         <div class="card-body">
@@ -721,48 +669,6 @@ $(function() {
         var selects = $('.filter-row select');
         selects.val('').trigger('change');
     });
-    $('#themSinhVienExcelBtn').click(function() {
-        // Hiển thị modal
-        $('#themSinhVienExcelModal').modal('show');
-    });
-    $('#themSinhVienExcelSubmit').click(function(e) {
-        e.preventDefault(); // Ngăn chặn hành vi mặc định khi click nút submit
-
-        // Lấy dữ liệu từ form
-        var formData = new FormData($('#sinhVienExcelForm')[0]);
-
-        // Gửi Ajax request
-        $.ajax({
-            url: '{{ route("sinhvien.import") }}',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                // Xử lý phản hồi thành công
-                Swal.fire({
-                    title: 'Thêm thành công',
-                    confirmButtonText: 'Ok',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload(); // Tải lại trang
-                    }
-                })
-            },
-            error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
-                // alert('Đã xảy ra lỗi: ' + xhr.responseText);
-                Swal.fire({
-                    title: 'Không đúng định dạng vui lòng nhập lại',
-                    confirmButtonText: 'Ok',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-
-                    }
-                })
-            }
-        });
-    });
     $('#ma_sv').on('input', function() {
         var ma_sv = $(this).val();
         var email = ma_sv + '@caothang.edu.vn';
@@ -840,145 +746,6 @@ $(function() {
             $("#showInactiveBtn").val('');
             button.text('Hiển thị danh sách đã xóa');
             table.ajax.url("{{ route('sinhvien.index') }}").load();
-        }
-    });
-    $('#datLaiBtn').click(function() {
-        $("#id_khoa_filter").empty();
-        var khoas = <?php echo json_encode($khoas); ?>;
-        $("#id_khoa_filter").append('<option value="0">-- Chọn khoa --</option>');
-        $.each(khoas, function(index, khoa) {
-            var option = '<option value="' + khoa.id + '">' + khoa
-                .ten_khoa +
-                '</option>';
-            $("#id_khoa_filter").append(option);
-        });
-
-        $("#id_chuyen_nganh_filter").empty();
-        var chuyennganhs = <?php echo json_encode($chuyennganhs); ?>;
-        $("#id_chuyen_nganh_filter").append('<option value="0">-- Chọn chuyên ngành --</option>');
-        $.each(chuyennganhs, function(index, chuyennganh) {
-            var option = '<option value="' + chuyennganh.id + '">' + chuyennganh
-                .ten_chuyen_nganh +
-                '</option>';
-            $("#id_chuyen_nganh_filter").append(option);
-        });
-        $("#id_lop_hoc_filter").empty();
-        var lophocs = <?php echo json_encode($lophocs); ?>;
-        $("#id_lop_hoc_filter").append('<option value="0">-- Chọn lớp --</option>');
-        $.each(lophocs, function(index, lophoc) {
-            var option = '<option value="' + lophoc.id + '">' + lophoc.ten_lop_hoc +
-                '</option>';
-            $("#id_lop_hoc_filter").append(option);
-        });
-    });
-    $('#xemBtn').click(function() {
-        var selectedKhoaId = $("#id_khoa_filter").val();
-        var selectedChuyenNganhId = $("#id_chuyen_nganh_filter").val();
-        var selectedLopHocId = $("#id_lop_hoc_filter").val();
-
-        if (selectedLopHocId != 0) {
-            // Nếu đã chọn lớp học, load danh sách sinh viên theo lớp học
-            table.ajax.url("{{ route('sinhvien.getSinhVienByIdLop', '') }}/" + selectedLopHocId).load();
-        } else if (selectedChuyenNganhId != 0) {
-            // Nếu đã chọn chuyên ngành, load danh sách sinh viên theo chuyên ngành
-            table.ajax.url("{{ route('sinhvien.getSinhVienByIdChuyenNganh', '') }}/" +
-                selectedChuyenNganhId).load();
-        } else if (selectedKhoaId != 0) {
-            // Nếu đã chọn khoa, load danh sách sinh viên theo khoa
-            table.ajax.url("{{ route('sinhvien.getSinhVienByIdKhoa', '') }}/" + selectedKhoaId).load();
-        } else {
-            // Nếu không chọn gì cả, load lại toàn bộ danh sách sinh viên
-            table.ajax.url("{{ route('sinhvien.index') }}").load();
-        }
-    });
-    $("#id_khoa_filter").change(function() {
-        var selectedKhoaId = $(this).val();
-        if (selectedKhoaId != 0) {
-            $.ajax({
-                url: "{{ route('sinhvien.getChuyenNganhByKhoa', '') }}/" + selectedKhoaId,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    // Xóa các option hiện tại trong dropdown chuyên ngành
-                    $("#id_chuyen_nganh_filter").empty();
-                    $("#id_chuyen_nganh_filter").append(
-                        '<option value="0">-- Chọn chuyên ngành --</option>');
-                    // Thêm các option mới từ response
-                    $.each(response, function(key, value) {
-                        $("#id_chuyen_nganh_filter").append('<option value="' +
-                            value.id + '">' + value.ten_chuyen_nganh +
-                            '</option>');
-                    });
-                }
-            });
-            $.ajax({
-                url: "{{ route('sinhvien.getLopByKhoa', '') }}/" + selectedKhoaId,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    // Xóa các option hiện tại trong dropdown lớp học
-                    $("#id_lop_hoc_filter").empty();
-                    $("#id_lop_hoc_filter").append(
-                        '<option value="0">-- Chọn lớp --</option>');
-                    // Thêm các option mới từ response
-                    $.each(response, function(key, value) {
-                        $("#id_lop_hoc_filter").append('<option value="' +
-                            value.id + '">' + value.ten_lop_hoc +
-                            '</option>');
-                    });
-                }
-            });
-        } else {
-            $("#id_chuyen_nganh_filter").empty();
-            var chuyennganhs = <?php echo json_encode($chuyennganhs); ?>;
-            $("#id_chuyen_nganh_filter").append('<option value="0">-- Chọn chuyên ngành --</option>');
-            $.each(chuyennganhs, function(index, chuyennganh) {
-                var option = '<option value="' + chuyennganh.id + '">' + chuyennganh
-                    .ten_chuyen_nganh +
-                    '</option>';
-                $("#id_chuyen_nganh_filter").append(option);
-            });
-            $("#id_lop_hoc_filter").empty();
-            var lophocs = <?php echo json_encode($lophocs); ?>;
-            $("#id_lop_hoc_filter").append('<option value="0">-- Chọn lớp --</option>');
-            $.each(lophocs, function(index, lophoc) {
-                var option = '<option value="' + lophoc.id + '">' + lophoc.ten_lop_hoc +
-                    '</option>';
-                $("#id_lop_hoc_filter").append(option);
-            });
-        }
-    });
-
-    // Lấy danh sách lớp học khi chọn chuyên ngành
-    $("#id_chuyen_nganh_filter").change(function() {
-        var selectedChuyenNganhId = $(this).val();
-
-        if (selectedChuyenNganhId != 0) {
-            $.ajax({
-                url: "{{ route('sinhvien.getLopByChuyenNganh', '') }}/" + selectedChuyenNganhId,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    // Xóa các option hiện tại trong dropdown lớp học
-                    $("#id_lop_hoc_filter").empty();
-                    $("#id_lop_hoc_filter").append(
-                        '<option value="0">-- Chọn lớp --</option>');
-                    // Thêm các option mới từ response
-                    $.each(response, function(key, value) {
-                        $("#id_lop_hoc_filter").append('<option value="' + value
-                            .id + '">' + value.ten_lop_hoc + '</option>');
-                    });
-                }
-            });
-        } else {
-            $("#id_lop_hoc_filter").empty();
-            var lophocs = <?php echo json_encode($lophocs); ?>;
-            $("#id_lop_hoc_filter").append('<option value="0">-- Chọn lớp --</option>');
-            $.each(lophocs, function(index, lophoc) {
-                var option = '<option value="' + lophoc.id + '">' + lophoc.ten_lop_hoc +
-                    '</option>';
-                $("#id_lop_hoc_filter").append(option);
-            });
         }
     });
     $('#createNewBtn').click(function() {

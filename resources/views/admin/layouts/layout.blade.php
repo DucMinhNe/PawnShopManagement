@@ -1,11 +1,5 @@
 @include('admin.layouts.header')
-@if(auth()->user()->id_chuc_vu == 1)
-@include('admin.layouts.sidebar1')
-@elseif(auth()->user()->id_chuc_vu == 2)
-@include('admin.layouts.sidebar2')
-@elseif(auth()->user()->id_chuc_vu == 3)
-@include('admin.layouts.sidebar3')
-@endif
+@include('admin.layouts.sidebar')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
