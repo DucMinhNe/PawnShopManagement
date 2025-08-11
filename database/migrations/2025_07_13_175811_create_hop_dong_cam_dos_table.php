@@ -14,29 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('hop_dong_cam_dos', function (Blueprint $table) {
-            $table->string('ma_sv')->primary();
-            $table->string('ten_sinh_vien')->nullable();
-            $table->string('email')->nullable();
+            $table->bigIncrements('id');
+            $table->string('ten_mon_hang');
+            $table->text('mo_ta')->nullable();
+            $table->string('nguoi_cam');
             $table->string('so_dien_thoai')->nullable();
-            $table->string('so_cmt')->nullable();
-            $table->boolean('gioi_tinh')->nullable();
-            $table->date('ngay_sinh')->nullable();
-            $table->string('noi_sinh')->nullable();
-            $table->string('dan_toc')->nullable();
-            $table->string('ton_giao')->nullable();
-            $table->string('dia_chi_thuong_tru')->nullable();
-            $table->string('dia_chi_tam_tru')->nullable();
-            $table->string('hinh_anh_dai_dien')->nullable();
-            $table->string('tai_khoan')->nullable();
-            $table->string('mat_khau')->nullable();
-            $table->string('khoa_hoc')->nullable();
-            $table->string('bac_dao_tao')->nullable();
-            $table->string('he_dao_tao')->nullable();
-            $table->integer('id_lop_hoc')->nullable()->index('id_lop_hoc');
-            $table->string('tinh_trang_hoc')->nullable();
-            $table->boolean('trang_thai')->nullable()->default(true);
-            $table->dateTime('created_at')->nullable();
-            $table->dateTime('updated_at')->nullable();
+            $table->string('so_cmnd')->nullable();
+            $table->date('ngay_cap_cmnd')->nullable();
+            $table->date('ngay_cam');
+            $table->decimal('lai_suat', 5, 2)->nullable();
+            $table->decimal('so_tien_cam', 15, 2);
+            $table->timestamps();
         });
     }
 

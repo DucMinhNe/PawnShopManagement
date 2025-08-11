@@ -120,50 +120,50 @@ $(function() {
         }
     });
     $(document).ready(function() {
-        $.ajax({
-            url: '{{ route("lay-tong-sinh-vien") }}',
-            type: 'GET',
-            success: function(response) {
-                var tongSinhViens = response.tongSinhViens;
-                $('#so-sinh-vien').text(tongSinhViens);
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText);
-            }
-        });
-        $.ajax({
-            url: '{{ route("lay-tong-giang-vien") }}',
-            type: 'GET',
-            success: function(response) {
-                var tongGiangViens = response.tongGiangViens;
-                $('#so-giang-vien').text(tongGiangViens);
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText);
-            }
-        });
-        $.ajax({
-            url: '{{ route("lay-tong-khoa") }}',
-            type: 'GET',
-            success: function(response) {
-                var tongKhoas = response.tongKhoas;
-                $('#so-khoa').text(tongKhoas);
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText);
-            }
-        });
-        $.ajax({
-            url: '{{ route("lay-tong-chuyen-nganh") }}',
-            type: 'GET',
-            success: function(response) {
-                var tongChuyenNganhs = response.tongChuyenNganhs;
-                $('#so-chuyen-nganh').text(tongChuyenNganhs);
-            },
-            error: function(xhr) {
-                console.log(xhr.responseText);
-            }
-        });
+        // $.ajax({
+        //     url: '',
+        //     type: 'GET',
+        //     success: function(response) {
+        //         var tongSinhViens = response.tongSinhViens;
+        //         $('#so-sinh-vien').text(tongSinhViens);
+        //     },
+        //     error: function(xhr) {
+        //         console.log(xhr.responseText);
+        //     }
+        // });
+        // $.ajax({
+        //     url: '',
+        //     type: 'GET',
+        //     success: function(response) {
+        //         var tongGiangViens = response.tongGiangViens;
+        //         $('#so-giang-vien').text(tongGiangViens);
+        //     },
+        //     error: function(xhr) {
+        //         console.log(xhr.responseText);
+        //     }
+        // });
+        // $.ajax({
+        //     url: '',
+        //     type: 'GET',
+        //     success: function(response) {
+        //         var tongKhoas = response.tongKhoas;
+        //         $('#so-khoa').text(tongKhoas);
+        //     },
+        //     error: function(xhr) {
+        //         console.log(xhr.responseText);
+        //     }
+        // });
+        // $.ajax({
+        //     url: '',
+        //     type: 'GET',
+        //     success: function(response) {
+        //         var tongChuyenNganhs = response.tongChuyenNganhs;
+        //         $('#so-chuyen-nganh').text(tongChuyenNganhs);
+        //     },
+        //     error: function(xhr) {
+        //         console.log(xhr.responseText);
+        //     }
+        // });
     });
 
 });

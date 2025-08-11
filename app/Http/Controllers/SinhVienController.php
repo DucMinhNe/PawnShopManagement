@@ -45,25 +45,25 @@ class SinhVienController extends Controller
         $lophocs = LopHoc::all();
         return view('admin.sinhviens.index', compact('khoas','chuyennganhs','lophocs'));    
     }
-    public function getInactiveData()
-    {
-        $data = SinhVien::leftJoin('lop_hocs', 'sinh_viens.id_lop_hoc', '=', 'lop_hocs.id')
-                ->select('sinh_viens.*', 'lop_hocs.ten_lop_hoc')
-                ->where('sinh_viens.trang_thai', 0) 
-                ->latest()
-                ->get();
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
+    // public function getInactiveData()
+    // {
+    //     $data = SinhVien::leftJoin('lop_hocs', 'sinh_viens.id_lop_hoc', '=', 'lop_hocs.id')
+    //             ->select('sinh_viens.*', 'lop_hocs.ten_lop_hoc')
+    //             ->where('sinh_viens.trang_thai', 0) 
+    //             ->latest()
+    //             ->get();
+    //         return Datatables::of($data)
+    //             ->addIndexColumn()
+    //             ->addColumn('action', function ($row) {
         
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->ma_sv . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBtn"><i class="fa-sharp fa-solid fa-pen-to-square"></i></a>';
-                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->ma_sv.'" data-original-title="Restore" class="restore btn btn-success btn-sm restoreBtn"><i class="fa-solid fa-trash-can-arrow-up"></i></a>';
+    //                 $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->ma_sv . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBtn"><i class="fa-sharp fa-solid fa-pen-to-square"></i></a>';
+    //                 $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->ma_sv.'" data-original-title="Restore" class="restore btn btn-success btn-sm restoreBtn"><i class="fa-solid fa-trash-can-arrow-up"></i></a>';
         
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-    }
+    //                 return $btn;
+    //             })
+    //             ->rawColumns(['action'])
+    //             ->make(true);
+    // }
     /**
      * Show the form for creating a new resource.
      *
@@ -72,97 +72,6 @@ class SinhVienController extends Controller
     public function create()
     {
         //
-    }
-    public function import() 
-    {   
-        $idLopHocExcel = request('id_lop_hoc_excel');
-    
-        Excel::import(new SinhViensImport($idLopHocExcel), request()->file('fileExcel'));
-        // Excel::import(new SinhViensImport,request()->file('fileExcel'));
-        return back();
-    }
-    public function getChuyenNganhByKhoa($id_khoa)
-    {
-        $chuyenNganhs = ChuyenNganh::where('id_khoa', $id_khoa)
-        ->where('trang_thai', 1)
-        ->get();
-
-        return response()->json($chuyenNganhs);
-    }
-    public function getLopByChuyenNganh($id_chuyen_nganh)
-    {
-        $lops = LopHoc::where('id_chuyen_nganh', $id_chuyen_nganh)
-        ->where('trang_thai', 1)
-        ->get();
-        return response()->json($lops);
-    }
-    public function getLopByKhoa($id_khoa)
-    {
-        $lops = LopHoc::join('chuyen_nganhs', 'lop_hocs.id_chuyen_nganh', '=', 'chuyen_nganhs.id')
-        ->where('chuyen_nganhs.id_khoa', $id_khoa)
-        ->where('lop_hocs.trang_thai', 1)
-        ->select('lop_hocs.*')
-        ->get();
-
-        return response()->json($lops);
-    }
-    public function getSinhVienByIdKhoa($id_khoa)
-    {
-        $data = SinhVien::leftJoin('lop_hocs', 'sinh_viens.id_lop_hoc', '=', 'lop_hocs.id')
-        ->leftJoin('chuyen_nganhs', 'lop_hocs.id_chuyen_nganh', '=', 'chuyen_nganhs.id')
-        ->select('sinh_viens.*', 'lop_hocs.ten_lop_hoc')
-        ->where('chuyen_nganhs.id_khoa', $id_khoa)
-        ->where('sinh_viens.trang_thai', 1)
-        ->latest()
-        ->get();
-
-        return Datatables::of($data)
-        ->addIndexColumn()
-        ->addColumn('action', function ($row) {
-            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->ma_sv . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBtn"><i class="fas fa-pencil-alt"></i></a>';
-            $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->ma_sv . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBtn"><i class="fas fa-trash"></i></a>';
-
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
-    }   
-    public function getSinhVienByIdChuyenNganh($id_chuyen_nganh)
-    {
-        $data = SinhVien::leftJoin('lop_hocs', 'sinh_viens.id_lop_hoc', '=', 'lop_hocs.id')
-        ->select('sinh_viens.*', 'lop_hocs.ten_lop_hoc')
-        ->where('lop_hocs.id_chuyen_nganh', $id_chuyen_nganh)
-        ->where('sinh_viens.trang_thai', 1)
-        ->latest()
-        ->get();
-        return Datatables::of($data)
-        ->addIndexColumn()
-        ->addColumn('action', function ($row) {
-            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->ma_sv . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBtn"><i class="fas fa-pencil-alt"></i></a>';
-            $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->ma_sv . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBtn"><i class="fas fa-trash"></i></a>';
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
-    }
-    public function getSinhVienByIdLop($id_lop)
-    {
-        $data = SinhVien::leftJoin('lop_hocs', 'sinh_viens.id_lop_hoc', '=', 'lop_hocs.id')
-        ->select('sinh_viens.*', 'lop_hocs.ten_lop_hoc')
-        ->where('id_lop_hoc', $id_lop)
-        ->where('sinh_viens.trang_thai', 1) 
-        ->latest()
-        ->get();
-        return Datatables::of($data)
-        ->addIndexColumn()
-        ->addColumn('action', function ($row) {
-
-            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->ma_sv . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBtn"><i class="fas fa-pencil-alt"></i></a>';
-            $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->ma_sv . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBtn"><i class="fas fa-trash"></i></a>';
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
     }
     public function taoBangTen($hoten, $lop)
     {   
@@ -266,72 +175,6 @@ class SinhVienController extends Controller
         $image->save($newImagePath);
         return response()->json(asset('sinhvien_thesinhvien/image.jpg'));
     }
-    public function getDiemTrungBinhHocKy()
-    {
-        $result = SinhVien::leftJoin('ct_lop_hoc_phans', 'sinh_viens.ma_sv', '=', 'ct_lop_hoc_phans.ma_sv')
-            ->leftJoin('lop_hoc_phans', 'ct_lop_hoc_phans.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->leftJoin('ct_chuong_trinh_dao_taos', 'lop_hoc_phans.id_ct_chuong_trinh_dao_tao', '=', 'ct_chuong_trinh_dao_taos.id')
-            ->select(
-                'sinh_viens.ten_sinh_vien',
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 1 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk1'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 2 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk2'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 3 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk3'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 4 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk4'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 5 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk5'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 6 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk6')
-            )
-            ->groupBy('sinh_viens.ten_sinh_vien')
-            ->get();
-    
-        return response()->json($result);
-    }
-    public function getDiemTrungBinhHocKyByLop($id_lop_hoc)
-    {
-        $result = SinhVien::leftJoin('ct_lop_hoc_phans', 'sinh_viens.ma_sv', '=', 'ct_lop_hoc_phans.ma_sv')
-            ->leftJoin('lop_hoc_phans', 'ct_lop_hoc_phans.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->leftJoin('ct_chuong_trinh_dao_taos', 'lop_hoc_phans.id_ct_chuong_trinh_dao_tao', '=', 'ct_chuong_trinh_dao_taos.id')
-            ->select(
-                'sinh_viens.ten_sinh_vien',
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 1 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk1'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 2 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk2'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 3 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk3'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 4 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk4'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 5 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk5'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 6 THEN GREATEST(ct_lop_hoc_phans.tong_ket_1, COALESCE(ct_lop_hoc_phans.tong_ket_2, ct_lop_hoc_phans.tong_ket_1)) ELSE NULL END) AS trung_binh_hk6')
-            )
-            ->where('sinh_viens.id_lop_hoc', $id_lop_hoc)
-            ->groupBy('sinh_viens.ten_sinh_vien')
-            ->get();
-    
-        return response()->json($result);
-    }
-    public function getDiemTrungBinhHocKyByLop_xettotnghiep($id_lop_hoc)
-    {
-        $result = SinhVien::leftJoin('ct_lop_hoc_phans', 'sinh_viens.ma_sv', '=', 'ct_lop_hoc_phans.ma_sv')
-            ->leftJoin('lop_hoc_phans', 'ct_lop_hoc_phans.id_lop_hoc_phan', '=', 'lop_hoc_phans.id')
-            ->leftJoin('ct_chuong_trinh_dao_taos', 'lop_hoc_phans.id_ct_chuong_trinh_dao_tao', '=', 'ct_chuong_trinh_dao_taos.id')
-            ->select(
-                'sinh_viens.ten_sinh_vien',
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 1 THEN GREATEST(COALESCE(ct_lop_hoc_phans.tong_ket_1, 0), COALESCE(ct_lop_hoc_phans.tong_ket_2, 0)) END) AS trung_binh_hk1'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 2 THEN GREATEST(COALESCE(ct_lop_hoc_phans.tong_ket_1, 0), COALESCE(ct_lop_hoc_phans.tong_ket_2, 0)) END) AS trung_binh_hk2'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 3 THEN GREATEST(COALESCE(ct_lop_hoc_phans.tong_ket_1, 0), COALESCE(ct_lop_hoc_phans.tong_ket_2, 0)) END) AS trung_binh_hk3'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 4 THEN GREATEST(COALESCE(ct_lop_hoc_phans.tong_ket_1, 0), COALESCE(ct_lop_hoc_phans.tong_ket_2, 0)) END) AS trung_binh_hk4'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 5 THEN GREATEST(COALESCE(ct_lop_hoc_phans.tong_ket_1, 0), COALESCE(ct_lop_hoc_phans.tong_ket_2, 0)) END) AS trung_binh_hk5'),
-                DB::raw('AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky = 6 THEN GREATEST(COALESCE(ct_lop_hoc_phans.tong_ket_1, 0), COALESCE(ct_lop_hoc_phans.tong_ket_2, 0)) END) AS trung_binh_hk6'),
-                DB::raw('CASE
-                    WHEN AVG(CASE WHEN ct_chuong_trinh_dao_taos.hoc_ky <= 6 AND (ct_lop_hoc_phans.tong_ket_1 >= 5 OR ct_lop_hoc_phans.tong_ket_2 >= 5) THEN GREATEST(COALESCE(ct_lop_hoc_phans.tong_ket_1, 0), COALESCE(ct_lop_hoc_phans.tong_ket_2, 0)) END) < 5 THEN "Không đạt"
-                    WHEN COUNT(CASE WHEN (ct_lop_hoc_phans.tong_ket_1 < 5 OR ct_lop_hoc_phans.tong_ket_2 < 5) AND (ct_lop_hoc_phans.tong_ket_1 IS NOT NULL OR ct_lop_hoc_phans.tong_ket_2 IS NOT NULL) THEN 1 END) > 0 THEN "Không đạt"
-                    ELSE "Đạt"
-                END AS tot_nghiep')
-            )
-            ->where('lop_hoc_phans.id_lop_hoc', $id_lop_hoc)
-            ->groupBy('sinh_viens.ten_sinh_vien')
-            ->get();
-    
-        return response()->json($result);
-    }
-    
-
     
     /**
      * Store a newly created resource in storage.
@@ -451,17 +294,5 @@ class SinhVienController extends Controller
         SinhVien::where('ma_sv', $id)->update(['trang_thai' => 1]);
         return response()->json(['success' => 'Xóa Chuyên Ngành Thành Công.']);
     }
-    public function laySinhVienTheoLopHoc($id_lop_hoc)
-    {
-        $sinhviens = SinhVien::where('id_lop_hoc', $id_lop_hoc)->get();
-        return response()->json($sinhviens);
-    }
-    public function layTongSinhVien()
-    {
-        $tongSinhViens = SinhVien::where('trang_thai', 1)->count();
-
-        return response()->json(['tongSinhViens' => $tongSinhViens]);
-    }
-
 
 }
