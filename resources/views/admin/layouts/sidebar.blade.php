@@ -139,7 +139,7 @@
                       </ul>
                   </li>
                     <li class="nav-item">
-                      <a href="/admin/dangxuat" class="nav-link">
+                      <a href="/admin/hopdongcamdo" class="nav-link">
                           <i class="nav-icon fas fa-right-from-bracket"></i>
                           <p>Quản Lý Cầm Đồ</p>
                       </a>

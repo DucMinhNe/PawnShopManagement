@@ -12,7 +12,7 @@ use App\Http\Controllers\CTChuongTrinhDaoTaoController;
 
 use App\Http\Controllers\GiangVienController;
 use App\Http\Controllers\ChucVuGiangVienController;
-use App\Http\Controllers\DanhSachChucVuGiangVienController;
+use App\Http\Controllers\HopDongCamDoController;
 
 use App\Http\Controllers\SinhVienController;
 /*
@@ -54,10 +54,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
 
         Route::get('/sinhvien/taothesinhvien/{ma_sv}', [SinhVienController::class, 'taoTheSinhVien'])->name('sinhvien.taothesinhvien');
-        Route::get('/sinhvien/taobangten/{hoten}/{lop}', [SinhVienController::class, 'taoBangTen'])->name('sinhvien.taobangten');
         Route::get('/sinhvien/getInactiveData', [SinhVienController::class, 'getInactiveData'])->name('sinhvien.getInactiveData');
         Route::get('/sinhvien/restore/{id}', [SinhVienController::class, 'restore'])->name('sinhvien.restore');
         Route::resource('sinhvien', SinhVienController::class);
+
+        Route::get('/hopdongcamdo/taothesinhvien/{ma_sv}', [HopDongCamDoController::class, 'taoTheSinhVien'])->name('hopdongcamdo.taohoadon');
+        Route::get('/hopdongcamdo/getInactiveData', [HopDongCamDoController::class, 'getInactiveData'])->name('hopdongcamdo.getInactiveData');
+        Route::get('/hopdongcamdo/restore/{id}', [HopDongCamDoController::class, 'restore'])->name('hopdongcamdo.restore');
+        Route::resource('hopdongcamdo', HopDongCamDoController::class);
     });
     Route::group(['middleware' => 'checkchucvu:1'], function () {
         Route::get('/giangvien/getBoMonByKhoa/{id_khoa}', [GiangVienController::class, 'getBoMonByKhoa'])->name('giangvien.getBoMonByKhoa');

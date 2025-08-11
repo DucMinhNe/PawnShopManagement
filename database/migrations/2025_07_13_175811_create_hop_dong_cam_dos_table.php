@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -16,6 +15,7 @@ return new class extends Migration
         Schema::create('hop_dong_cam_dos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('ten_mon_hang');
+            $table->string('hinh_anh_mon_hang')->nullable();
             $table->text('mo_ta')->nullable();
             $table->string('nguoi_cam');
             $table->string('so_dien_thoai')->nullable();
@@ -24,6 +24,8 @@ return new class extends Migration
             $table->date('ngay_cam');
             $table->decimal('lai_suat', 5, 2)->nullable();
             $table->decimal('so_tien_cam', 15, 2);
+            $table->string('trang_thai_hop_dong')->nullable();
+            $table->boolean('trang_thai')->nullable()->default(true);
             $table->timestamps();
         });
     }
