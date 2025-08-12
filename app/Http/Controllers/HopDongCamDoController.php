@@ -83,10 +83,11 @@ class HopDongCamDoController extends Controller
             'nguoi_cam' => ['required', 'string'],
             'so_dien_thoai' => ['required', 'regex:/^(0|\+84)?([3-9]\d{8})$/'],
             'so_cmnd' => ['required', 'regex:/\d{9}|\d{12}/'],
-            'ngay_cap_cmnd' => ['required', 'date'],
             'ngay_cam' => ['required', 'date'],
+            'ngay_het_han_cam' => ['nullable', 'date'],
             'lai_suat' => ['required', 'numeric'],
             'so_tien_cam' => ['required', 'numeric'],
+            'tien_lai' => ['nullable', 'numeric'],
             'trang_thai_hop_dong' => ['nullable', 'string'],
             'trang_thai' => ['required', 'integer'],
         ]);
@@ -98,10 +99,11 @@ class HopDongCamDoController extends Controller
             'nguoi_cam' => $request->nguoi_cam,
             'so_dien_thoai' => $request->so_dien_thoai,
             'so_cmnd' => $request->so_cmnd,
-            'ngay_cap_cmnd' => $request->ngay_cap_cmnd,
             'ngay_cam' => $request->ngay_cam,
+            'ngay_het_han_cam' => $request->ngay_het_han_cam,
             'lai_suat' => $request->lai_suat,
             'so_tien_cam' => $request->so_tien_cam,
+            'tien_lai' => $request->tien_lai,
             'trang_thai_hop_dong' => $request->trang_thai_hop_dong,
             'trang_thai' => $request->trang_thai,
         ];
@@ -130,8 +132,8 @@ class HopDongCamDoController extends Controller
      */
     public function edit($id)
     {
-        $sinhvien = SinhVien::find($id);
-        return response()->json($sinhvien);
+        $hopDongCamDo = HopDongCamDo::find($id);
+        return response()->json($hopDongCamDo);
     }
 
     /**

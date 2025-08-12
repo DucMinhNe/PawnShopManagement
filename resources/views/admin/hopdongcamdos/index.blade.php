@@ -46,11 +46,13 @@
                         <th>Người Cầm</th>
                         <th>Số Điện Thoại</th>
                         <th>Số CMND</th>
-                        <th>Ngày Cấp CMND</th>
                         <th>Ngày Cầm</th>
+                        <th>Ngày Hết Hạn Cầm</th>
                         <th>Lãi Suất (%)</th>
                         <th>Số Tiền Cầm</th>
+                        <th>Tiền Lãi</th>
                         <th>Trạng Thái</th>
+                        <th>Trạng Thái Hợp Đồng</th>
                         <th width="72px" class="text-center"><a href="#" id="filterToggle">Bộ Lọc</a></th>
                     </tr>
                     <tr class="filter-row">
@@ -66,11 +68,13 @@
                         <th></th>
                         <th></th>
                         <th></th>
+                        <th></th>
+                        <th></th>
                         <th width="72px" class="text-center">
                             <div class="mb-2"><a href="#" class="pb-2 reset-filter">↺</a></div>
                         </th>
                     </tr>
-                </thead>
+                </thead></th>
                 <tbody></tbody>
             </table>
         </div>
@@ -136,7 +140,14 @@
                                         <div class="invalid-feedback">Vui lòng nhập tên người cầm.</div>
                                     </div>
                                 </div>
-
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="so_dien_thoai">Số Điện Thoại</label>
+                                        <input type="text" class="form-control" id="so_dien_thoai" name="so_dien_thoai"
+                                            placeholder="VD: 09xxxxxxxx" required pattern="^(0|\+84)?([3-9]\d{8})$">
+                                        <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ.</div>
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="so_cmnd">Số CMND/CCCD</label>
@@ -145,6 +156,33 @@
                                         <div class="invalid-feedback">Vui lòng nhập CMND 9 số hoặc CCCD 12 số.</div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="ngay_cam">Ngày Cầm</label>
+                                        <input type="date" class="form-control" id="ngay_cam" name="ngay_cam" required>
+                                        <div class="invalid-feedback">Vui lòng chọn ngày cầm.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="ngay_het_han_cam">Ngày Hết Hạn Cầm</label>
+                                        <input type="date" class="form-control" id="ngay_het_han_cam" name="ngay_het_han_cam"
+                                            required>
+                                        <div class="invalid-feedback">Vui lòng chọn ngày hết hạn.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="so_ngaycam">Số Ngày Cầm</label>
+                                        <input type="number" class="form-control" id="so_ngaycam" name="so_ngaycam" value=""
+                                             disabled>
+                                        <div class="invalid-feedback">Vui lòng chọn ngày cấp.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="so_tien_cam_display">Số Tiền Cầm</label>
@@ -160,27 +198,6 @@
                                         <div class="invalid-feedback">Vui lòng nhập số tiền cầm.</div>
                                     </div>
                                 </div>
-
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="so_dien_thoai">Số Điện Thoại</label>
-                                        <input type="text" class="form-control" id="so_dien_thoai" name="so_dien_thoai"
-                                            placeholder="VD: 09xxxxxxxx" required pattern="^(0|\+84)?([3-9]\d{8})$">
-                                        <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ.</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="ngay_cap_cmnd">Ngày Cấp CMND/CCCD</label>
-                                        <input type="date" class="form-control" id="ngay_cap_cmnd" name="ngay_cap_cmnd"
-                                            required>
-                                        <div class="invalid-feedback">Vui lòng chọn ngày cấp.</div>
-                                    </div>
-                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="lai_suat">Lãi Suất (%)</label>
@@ -189,17 +206,16 @@
                                         <div class="invalid-feedback">Vui lòng nhập lãi suất hợp lệ.</div>
                                     </div>
                                 </div>
-
-
-
-                            </div>
-
-                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="ngay_cam">Ngày Cầm</label>
-                                        <input type="date" class="form-control" id="ngay_cam" name="ngay_cam" required>
-                                        <div class="invalid-feedback">Vui lòng chọn ngày cầm.</div>
+                                        <label for="tien_lai">Tiền Lãi</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="tien_lai" name="tien_lai" placeholder=""
+                                                inputmode="numeric" autocomplete="off" required>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">₫</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -216,7 +232,7 @@
                                         <div class="invalid-feedback">Vui lòng chọn trạng thái.</div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="display:none">
                                     <div class="form-group">
                                         <label for="trang_thai">Trạng Thái</label>
                                         <select class="form-control select2" id="trang_thai" name="trang_thai" required>
@@ -302,7 +318,7 @@
                     { data: 'so_dien_thoai', name: 'so_dien_thoai' },
                     { data: 'so_cmnd', name: 'so_cmnd' },
                     {
-                        data: 'ngay_cap_cmnd', name: 'ngay_cap_cmnd',
+                        data: 'ngay_cam', name: 'ngay_cam',
                         render: function (data, type) {
                             if (type === 'display' && data) {
                                 var d = new Date(data); return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
@@ -310,7 +326,7 @@
                         }
                     },
                     {
-                        data: 'ngay_cam', name: 'ngay_cam',
+                        data: 'ngay_het_han_cam', name: 'ngay_het_han_cam',
                         render: function (data, type) {
                             if (type === 'display' && data) {
                                 var d = new Date(data); return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
@@ -325,11 +341,31 @@
                             const n = Number(data);
                             if (isNaN(n)) return data;
                             const str = n.toLocaleString('vi-VN');
-                            return type === 'display' ? (str + ' ₫') : n; // display có đơn vị, sort vẫn đúng
+                            return type === 'display' ? (str + ' ₫') : n;
                         }
                     },
-
+                    {
+                        data: 'tien_lai', name: 'tien_lai',
+                        render: function (data, type) {
+                            if (data == null) return '';
+                            const n = Number(data);
+                            if (isNaN(n)) return data;
+                            const str = n.toLocaleString('vi-VN');
+                            return type === 'display' ? (str + ' ₫') : n;
+                        }
+                    },
                     { data: 'trang_thai', name: 'trang_thai' },
+                    {
+                        data: 'trang_thai_hop_dong', name: 'trang_thai_hop_dong',
+                        render: function (data) {
+                            switch (data) {
+                                case 'DANG_CAM': return 'Đang cầm';
+                                case 'DA_CHUOC': return 'Đã chuộc';
+                                case 'QUA_HAN': return 'Quá hạn';
+                                default: return data;
+                            }
+                        }
+                    },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
                 language: {
@@ -450,7 +486,7 @@
                 $('#hinh_anh_mon_hang_preview').attr('src', '{{ asset("img/warning.jpg") }}').attr('alt', 'Warning');
                 $('#so_tien_cam_display').val('');
                 $('#so_tien_cam').val('');
-                $('#trang_thai').val('').trigger('change');
+                // $('#trang_thai').val('').trigger('change');
             });
 
             // Sửa
@@ -474,6 +510,8 @@
                     $('#so_tien_cam_display').val(
                         Number(data.so_tien_cam || 0).toLocaleString('vi-VN')
                     );
+                    $('#ngay_het_han_cam').val(data.ngay_het_han_cam);
+                    $('#tien_lai').val(data.tien_lai);
                     $('#trang_thai_hop_dong').val(data.trang_thai_hop_dong).trigger('change');
                     $('#trang_thai').val(data.trang_thai).trigger('change');
 
@@ -567,4 +605,120 @@
             });
         });
     </script>
+
+    <script>
+        $(function () {
+            const $ngayCam = $('#ngay_cam');
+            const $ngayHetHan = $('#ngay_het_han_cam');
+            const $soNgayCam = $('#so_ngaycam'); // Nên để readonly thay vì disabled
+
+            function toUTC(dateStr) {
+                if (!dateStr) return null;
+                const [y, m, d] = dateStr.split('-').map(Number);
+                return Date.UTC(y, m - 1, d);
+            }
+
+            function updateSoNgayCam() {
+                const sUTC = toUTC($ngayCam.val());
+                const eUTC = toUTC($ngayHetHan.val());
+                if (sUTC == null || eUTC == null) {
+                    $soNgayCam.val('');
+                    return;
+                }
+                let days = Math.max(0, Math.round((eUTC - sUTC) / 86400000));
+                // Nếu muốn tính cả ngày bắt đầu: days = days + 1;
+                $soNgayCam.val(days);
+            }
+
+            $ngayCam.on('change', function () {
+                const v = $(this).val();
+                $ngayHetHan.attr('min', v);
+                if ($ngayHetHan.val() && $ngayHetHan.val() < v) {
+                    $ngayHetHan.val(v);
+                }
+                updateSoNgayCam();
+            });
+
+            $ngayHetHan.on('change', updateSoNgayCam);
+
+            // Khởi tạo khi load trang
+            if ($ngayCam.val()) $ngayHetHan.attr('min', $ngayCam.val());
+            updateSoNgayCam();
+        });
+    </script>
+
+    <script>
+        $(function () {
+            const $principalDisp = $('#so_tien_cam_display'); // hiển thị (có dấu .)
+            const $principalRaw = $('#so_tien_cam');         // số thuần gửi server
+            const $rate = $('#lai_suat');            // %
+            const $interestDisp = $('#tien_lai');            // tiền lãi (hiển thị)
+
+            let lastEdited = null; // 'rate' | 'interest' | null
+
+            // Helpers
+            function onlyDigits(s) { return (s || '').replace(/[^\d]/g, ''); }
+            function formatVND(n) { return n ? Number(n).toLocaleString('vi-VN') : ''; }
+
+            function syncPrincipal() {
+                const raw = onlyDigits($principalDisp.val());
+                $principalRaw.val(raw);
+                // format lại hiển thị
+                $principalDisp.val(formatVND(raw));
+            }
+
+            function computeFromRate() {
+                const P = parseInt($principalRaw.val() || '0', 10);
+                const r = parseFloat($rate.val());
+                if (!P || isNaN(r)) {
+                    $interestDisp.val('');
+                    return;
+                }
+                const I = Math.floor(P * (r / 100)); // đơn giản: lãi = P * r%
+                $interestDisp.val(formatVND(I)).attr('data-raw', I);
+            }
+
+            function computeFromInterest() {
+                const P = parseInt($principalRaw.val() || '0', 10);
+                const Iraw = onlyDigits($interestDisp.val());
+                if (!P || !Iraw) {
+                    $rate.val('');
+                    return;
+                }
+                const I = parseInt(Iraw, 10);
+                let r = (I / P) * 100;                 // r %
+                r = Math.round(r * 100) / 100;         // làm tròn 2 chữ số thập phân
+                $rate.val(r);                          // gán ngược vào ô lãi suất
+                // format lại tiền lãi cho đẹp
+                $interestDisp.val(formatVND(I)).attr('data-raw', I);
+            }
+
+            // Sự kiện
+            $principalDisp.on('input', function () {
+                syncPrincipal();
+                // Sau khi đổi gốc, tính lại theo cái vừa sửa gần nhất
+                if (lastEdited === 'rate') computeFromRate();
+                if (lastEdited === 'interest') computeFromInterest();
+            });
+
+            $rate.on('input change', function () {
+                lastEdited = 'rate';
+                computeFromRate();
+            });
+
+            $interestDisp.on('input', function () {
+                // cho phép người dùng gõ số có dấu chấm, mình tự làm sạch và format
+                lastEdited = 'interest';
+                computeFromInterest();
+            });
+
+            // Khởi tạo nếu có sẵn giá trị
+            (function init() {
+                syncPrincipal();
+                if ($rate.val()) { lastEdited = 'rate'; computeFromRate(); }
+                else if ($interestDisp.val()) { lastEdited = 'interest'; computeFromInterest(); }
+            })();
+        });
+    </script>
+
 @endsection

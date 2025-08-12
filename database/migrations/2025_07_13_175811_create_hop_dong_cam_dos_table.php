@@ -20,12 +20,13 @@ return new class extends Migration {
             $table->string('nguoi_cam');
             $table->string('so_dien_thoai')->nullable();
             $table->string('so_cmnd')->nullable();
-            $table->date('ngay_cap_cmnd')->nullable();
             $table->date('ngay_cam');
+            $table->date('ngay_het_han_cam')->nullable();
             $table->decimal('lai_suat', 5, 2)->nullable();
             $table->decimal('so_tien_cam', 15, 2);
-            $table->string('trang_thai_hop_dong')->nullable();
+            $table->decimal('tien_lai', 15, 2)->nullable();
             $table->boolean('trang_thai')->nullable()->default(true);
+            $table->string('trang_thai_hop_dong')->nullable();
             $table->timestamps();
         });
     }
