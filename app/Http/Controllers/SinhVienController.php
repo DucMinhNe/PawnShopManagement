@@ -121,9 +121,9 @@ class SinhVienController extends Controller
             return "Không tìm thấy hình ảnh";
         }
         $image->insert($hinhsv, 'top-left', 37, 165);
-        $logocaothang = Image::make(public_path('sinhvien_thesinhvien/logo_caothang.jpg'))->resize(80, 120);
+        $logocaothang = Image::make(public_path('sinhvien_thesinhvien/phu-an-khang-logo.jpg'))->resize(80, 120);
         $image->insert($logocaothang, 'top-left', 59, 10);
-        $image->text('TRƯỜNG CAO ĐẲNG KỸ THUẬT CAO THẮNG', 170, 24, function($font) {
+        $image->text('TRƯỜNG CAO ĐẲNG KỸ THUẬT Phú An Khang', 170, 24, function($font) {
             $font->file(public_path('sinhvien_thesinhvien/calibri.ttf'));
             $font->size(32);
             $font->color('#0000FF');

@@ -85,9 +85,10 @@ class HopDongCamDoController extends Controller
             'so_cmnd' => ['required', 'regex:/\d{9}|\d{12}/'],
             'ngay_cam' => ['required', 'date'],
             'ngay_het_han_cam' => ['nullable', 'date'],
+            'so_ngay_cam' => ['nullable', 'numeric'],
             'lai_suat' => ['required', 'numeric'],
             'so_tien_cam' => ['required', 'numeric'],
-            'tien_lai' => ['nullable', 'numeric'],
+            'so_tien_lai' => ['nullable', 'numeric'],
             'trang_thai_hop_dong' => ['nullable', 'string'],
             'trang_thai' => ['required', 'integer'],
         ]);
@@ -101,9 +102,10 @@ class HopDongCamDoController extends Controller
             'so_cmnd' => $request->so_cmnd,
             'ngay_cam' => $request->ngay_cam,
             'ngay_het_han_cam' => $request->ngay_het_han_cam,
+            'so_ngay_cam' => $request->so_ngay_cam,
             'lai_suat' => $request->lai_suat,
             'so_tien_cam' => $request->so_tien_cam,
-            'tien_lai' => $request->tien_lai,
+            'so_tien_lai' => $request->so_tien_lai,
             'trang_thai_hop_dong' => $request->trang_thai_hop_dong,
             'trang_thai' => $request->trang_thai,
         ];

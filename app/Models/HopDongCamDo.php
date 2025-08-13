@@ -18,10 +18,11 @@ class HopDongCamDo extends Model
         'so_cmnd',
         'ngay_cam',
         'ngay_het_han_cam',
+        'so_ngay_cam',
         'lai_suat',
         'so_tien_cam',
-        'tien_lai',
+        'so_tien_lai',
         'trang_thai',
         'trang_thai_hop_dong'
     ];
-}   
+}

@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
           SinhVienSeeder::class,
             // ChuongTrinhDaoTaoSeeder::class,
           //  CTChuongTrinhDaoTaoSeeder::class,
+          HopDongCamDoSeeder::class,
         ]);
     }
 }

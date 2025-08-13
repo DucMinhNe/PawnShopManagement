@@ -22,9 +22,10 @@ return new class extends Migration {
             $table->string('so_cmnd')->nullable();
             $table->date('ngay_cam');
             $table->date('ngay_het_han_cam')->nullable();
+            $table->integer('so_ngay_cam')->nullable();
             $table->decimal('lai_suat', 5, 2)->nullable();
             $table->decimal('so_tien_cam', 15, 2);
-            $table->decimal('tien_lai', 15, 2)->nullable();
+            $table->decimal('so_tien_lai', 15, 2)->nullable();
             $table->boolean('trang_thai')->nullable()->default(true);
             $table->string('trang_thai_hop_dong')->nullable();
             $table->timestamps();

@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Cao Thắng</title>
+        <title>Phú An Khang</title>
         <link rel="icon" type="image/png" href="{{ asset('dist/img/caothang.png') }}" />
         <!-- Google Font: Source Sans Pro -->
         <!-- <link rel="stylesheet"
@@ -55,7 +55,7 @@
 
             <!-- Preloader -->
             <div class="preloader flex-column justify-content-center align-items-center">
-                <img class="animation__shake" src="{{ asset('dist/img/logo_caothang.jpg') }}" alt="LogoCaoThang"
+                <img class="animation__shake" src="{{ asset('dist/img/phu-an-khang-logo.jpg') }}" alt="LogoCaoThang"
                     height="200" width="120">
             </div>
             <!-- Navbar -->
